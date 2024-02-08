@@ -1,0 +1,27 @@
+[0.176s] Invoking command in '/home/luize/Documents/imitando yolo/yolobot/build/yolobot_recognition': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/luize/Documents/imitando yolo/yolobot/build/yolobot_recognition -- -j8 -l8
+[0.217s] Invoked command in '/home/luize/Documents/imitando yolo/yolobot/build/yolobot_recognition' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/luize/Documents/imitando yolo/yolobot/build/yolobot_recognition -- -j8 -l8
+[0.261s] Invoking command in '/home/luize/Documents/imitando yolo/yolobot/build/yolobot_recognition': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/luize/Documents/imitando yolo/yolobot/build/yolobot_recognition
+[0.275s] -- Install configuration: ""
+[0.276s] -- Up-to-date: /home/luize/Documents/imitando yolo/yolobot/install/yolobot_recognition/share/yolobot_recognition//scripts
+[0.277s] -- Up-to-date: /home/luize/Documents/imitando yolo/yolobot/install/yolobot_recognition/share/yolobot_recognition//scripts/yolov8_ros2_pt.py
+[0.284s] -- Up-to-date: /home/luize/Documents/imitando yolo/yolobot/install/yolobot_recognition/share/yolobot_recognition//scripts/webcam_publisher.py
+[0.285s] -- Installing: /home/luize/Documents/imitando yolo/yolobot/install/yolobot_recognition/share/yolobot_recognition//scripts/yolov8_ros2_subscriber.py
+[0.285s] -- Up-to-date: /home/luize/Documents/imitando yolo/yolobot/install/yolobot_recognition/lib/yolobot_recognition/yolov8_ros2_pt.py
+[0.286s] -- Installing: /home/luize/Documents/imitando yolo/yolobot/install/yolobot_recognition/lib/yolobot_recognition/yolov8_ros2_subscriber.py
+[0.286s] -- Up-to-date: /home/luize/Documents/imitando yolo/yolobot/install/yolobot_recognition/lib/yolobot_recognition/webcam_publisher.py
+[0.287s] -- Up-to-date: /home/luize/Documents/imitando yolo/yolobot/install/yolobot_recognition/share/ament_index/resource_index/package_run_dependencies/yolobot_recognition
+[0.287s] -- Up-to-date: /home/luize/Documents/imitando yolo/yolobot/install/yolobot_recognition/share/ament_index/resource_index/parent_prefix_path/yolobot_recognition
+[0.288s] -- Up-to-date: /home/luize/Documents/imitando yolo/yolobot/install/yolobot_recognition/share/yolobot_recognition/environment/ament_prefix_path.sh
+[0.288s] -- Up-to-date: /home/luize/Documents/imitando yolo/yolobot/install/yolobot_recognition/share/yolobot_recognition/environment/ament_prefix_path.dsv
+[0.289s] -- Up-to-date: /home/luize/Documents/imitando yolo/yolobot/install/yolobot_recognition/share/yolobot_recognition/environment/path.sh
+[0.289s] -- Up-to-date: /home/luize/Documents/imitando yolo/yolobot/install/yolobot_recognition/share/yolobot_recognition/environment/path.dsv
+[0.290s] -- Up-to-date: /home/luize/Documents/imitando yolo/yolobot/install/yolobot_recognition/share/yolobot_recognition/local_setup.bash
+[0.290s] -- Up-to-date: /home/luize/Documents/imitando yolo/yolobot/install/yolobot_recognition/share/yolobot_recognition/local_setup.sh
+[0.290s] -- Up-to-date: /home/luize/Documents/imitando yolo/yolobot/install/yolobot_recognition/share/yolobot_recognition/local_setup.zsh
+[0.291s] -- Up-to-date: /home/luize/Documents/imitando yolo/yolobot/install/yolobot_recognition/share/yolobot_recognition/local_setup.dsv
+[0.292s] -- Installing: /home/luize/Documents/imitando yolo/yolobot/install/yolobot_recognition/share/yolobot_recognition/package.dsv
+[0.293s] -- Up-to-date: /home/luize/Documents/imitando yolo/yolobot/install/yolobot_recognition/share/ament_index/resource_index/packages/yolobot_recognition
+[0.293s] -- Up-to-date: /home/luize/Documents/imitando yolo/yolobot/install/yolobot_recognition/share/yolobot_recognition/cmake/yolobot_recognitionConfig.cmake
+[0.293s] -- Up-to-date: /home/luize/Documents/imitando yolo/yolobot/install/yolobot_recognition/share/yolobot_recognition/cmake/yolobot_recognitionConfig-version.cmake
+[0.294s] -- Up-to-date: /home/luize/Documents/imitando yolo/yolobot/install/yolobot_recognition/share/yolobot_recognition/package.xml
+[0.296s] Invoked command in '/home/luize/Documents/imitando yolo/yolobot/build/yolobot_recognition' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/luize/Documents/imitando yolo/yolobot/build/yolobot_recognition

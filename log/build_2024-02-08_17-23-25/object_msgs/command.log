@@ -1,0 +1,1 @@
+Invoking command in '/home/luize/Documents/imitando yolo/yolobot/build/object_msgs': /usr/bin/cmake /home/luize/Documents/imitando yolo/yolobot/src/object_msgs -DCMAKE_INSTALL_PREFIX=/home/luize/Documents/imitando yolo/yolobot/install/object_msgs

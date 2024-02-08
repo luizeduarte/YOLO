@@ -1,0 +1,5 @@
+[0.091s] Invoking command in '/home/luize/Documents/imitando yolo/yolobot/build/yolobot_recognition': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/luize/Documents/imitando yolo/yolobot/build/yolobot_recognition -- -j8 -l8
+[0.107s] [0mCMake Error: The source directory "/home/luize/Documents/imitando yolo/yolobot/src/yolobot_recognition" does not exist.
+[0.107s] Specify --help for usage, or press the help button on the CMake GUI.[0m
+[0.107s] gmake: *** [Makefile:226: cmake_check_build_system] Error 1
+[0.110s] Invoked command in '/home/luize/Documents/imitando yolo/yolobot/build/yolobot_recognition' returned '2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/luize/Documents/imitando yolo/yolobot/build/yolobot_recognition -- -j8 -l8

@@ -1,0 +1,4 @@
+Invoking command in '/home/luize/Documents/imitando yolo/yolobot/build/yolobot_recognition': /usr/bin/cmake --build /home/luize/Documents/imitando yolo/yolobot/build/yolobot_recognition -- -j8 -l8
+Invoked command in '/home/luize/Documents/imitando yolo/yolobot/build/yolobot_recognition' returned '0': /usr/bin/cmake --build /home/luize/Documents/imitando yolo/yolobot/build/yolobot_recognition -- -j8 -l8
+Invoking command in '/home/luize/Documents/imitando yolo/yolobot/build/yolobot_recognition': /usr/bin/cmake --install /home/luize/Documents/imitando yolo/yolobot/build/yolobot_recognition
+Invoked command in '/home/luize/Documents/imitando yolo/yolobot/build/yolobot_recognition' returned '0': /usr/bin/cmake --install /home/luize/Documents/imitando yolo/yolobot/build/yolobot_recognition

@@ -1,0 +1,1 @@
+Invoking command in '/home/luize/Documents/imitando yolo/yolobot/build/yolov8_msgs': CMAKE_PREFIX_PATH=/home/luize/Documents/@home/install/face_recognition:/opt/ros/humble /usr/bin/cmake /home/luize/Documents/imitando yolo/yolobot/src/yolov8_msgs -DCMAKE_INSTALL_PREFIX=/home/luize/Documents/imitando yolo/yolobot/install/yolov8_msgs
