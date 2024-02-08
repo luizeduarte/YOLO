@@ -1,7 +1,0 @@
-{
-  "package_name": "object_msgs",
-  "non_idl_tuples": [
-    "/home/luize/Documents/imitando yolo/yolobot/src/object_msgs:msg/InferenceResult.msg",
-    "/home/luize/Documents/imitando yolo/yolobot/src/object_msgs:msg/Yolov8Inference.msg"
-  ]
-}

@@ -1,3 +1,0 @@
-[0mCMake Error: The source directory "/home/luize/Documents/imitando yolo/yolobot/src/yolobot_recognition" does not appear to contain CMakeLists.txt.
-Specify --help for usage, or press the help button on the CMake GUI.[0m
-gmake: *** [Makefile:226: cmake_check_build_system] Error 1

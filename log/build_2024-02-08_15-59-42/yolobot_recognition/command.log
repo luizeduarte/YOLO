@@ -1,4 +1,0 @@
-Invoking command in '/home/luize/Documents/imitando yolo/yolobot/build/yolobot_recognition': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/luize/Documents/imitando yolo/yolobot/build/yolobot_recognition -- -j8 -l8
-Invoked command in '/home/luize/Documents/imitando yolo/yolobot/build/yolobot_recognition' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/luize/Documents/imitando yolo/yolobot/build/yolobot_recognition -- -j8 -l8
-Invoking command in '/home/luize/Documents/imitando yolo/yolobot/build/yolobot_recognition': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/luize/Documents/imitando yolo/yolobot/build/yolobot_recognition
-Invoked command in '/home/luize/Documents/imitando yolo/yolobot/build/yolobot_recognition' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/luize/Documents/imitando yolo/yolobot/build/yolobot_recognition

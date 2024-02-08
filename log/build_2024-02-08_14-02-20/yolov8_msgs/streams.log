@@ -1,5 +1,0 @@
-[0.094s] Invoking command in '/home/luize/Documents/imitando yolo/yolobot/build/yolov8_msgs': CMAKE_PREFIX_PATH=/home/luize/Documents/@home/install/face_recognition:/opt/ros/humble /usr/bin/cmake --build /home/luize/Documents/imitando yolo/yolobot/build/yolov8_msgs -- -j8 -l8
-[0.110s] [0mCMake Error: The source directory "/home/luize/Documents/imitando yolo/yolobot/src/yolov8_msgs" does not appear to contain CMakeLists.txt.
-[0.111s] Specify --help for usage, or press the help button on the CMake GUI.[0m
-[0.112s] gmake: *** [Makefile:963: cmake_check_build_system] Error 1
-[0.114s] Invoked command in '/home/luize/Documents/imitando yolo/yolobot/build/yolov8_msgs' returned '2': CMAKE_PREFIX_PATH=/home/luize/Documents/@home/install/face_recognition:/opt/ros/humble /usr/bin/cmake --build /home/luize/Documents/imitando yolo/yolobot/build/yolov8_msgs -- -j8 -l8
