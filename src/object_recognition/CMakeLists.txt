@@ -17,6 +17,12 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
+find_package(rclpy REQUIRED)
+find_package(cv_bridge REQUIRED)
+find_package(sensor_msgs REQUIRED)
+find_package(std_msgs REQUIRED)
+find_package(OpenCV REQUIRED)
+
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
@@ -41,6 +47,7 @@ install(
 
 install(
   PROGRAMS
+  scripts/segmentation.py
   scripts/yolo_node.py
   scripts/yolo_subscriber.py
   scripts/webcam_publisher.py

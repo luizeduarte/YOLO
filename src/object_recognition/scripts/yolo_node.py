@@ -15,7 +15,7 @@ class yolo(Node):
     def __init__(self):
         super().__init__('yolo')
 
-        self.model = YOLO('yolo_model/yolov8n.pt')
+        self.model = YOLO('yolov8n.pt')
         self.model_results = ModelResults()
 
         self.subscription = self.create_subscription(Image, '/webcam_image', self.camera_callback, 10)
