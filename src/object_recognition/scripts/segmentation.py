@@ -1,121 +1,116 @@
 #!/usr/bin/env python3
 
+import math
+import numpy as np
+import cv2
 import rclpy
 from rclpy.node import Node
-from sensor_msgs.msg import Image
-from yolo_msgs.msg import ObjectData
-from yolo_msgs.msg import ModelResults
-import cv2
-import numpy as np
+from sensor_msgs.msg import Image, PointCloud2
+from sensor_msgs_py import point_cloud2 as pc2
+from pcl_conversions import pcl_conversions
 from sklearn.cluster import KMeans
-from cv_bridge import CvBridge
-from pyntcloud import PyntCloud
-import open3d as o3d
 
-bridge = CvBridge()
+class Segmentation(Node):
 
-class cloud_clustering_node(Node):
-   def __init__(self):
-        super().__init__('cloud_clustering_node')
-        self.subscription = self.create_subscription(ModelResults, '/model_results', self.yolo_callback, 10)
-        self.subscription = self.create_subscription(Image, '/webcam_image', self.camera_callback, 10)
-        self.image_publisher = self.create_publisher(Image, '/segmented_image', 10)
-        self.subscription
+    def __init__(self):
+        super().__init__('segmentation_node')
 
-   def camera_callback(self, data):
-        global img
-        img = bridge.imgmsg_to_cv2(data, "bgr8")
-        self.gray_image = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        self.subscription_image = self.create_subscription(Image, '/webcam_image', self.camera_callback, 10)
+        self.subscription_yolo = self.create_subscription(ModelResults, '/model_results', self.yolo_callback, 10)
 
+        self.point_cloud_pub = self.create_publisher(PointCloud2, '/point_cloud', 1)
 
-        #use the ORB detector to find key points
-        orb = cv2.ORB_create()
-        keypoints, descriptors = orb.detectAndCompute(self.gray_image, None)
+        self.point_cloud = None
+        self.center_pointX = 0
+        self.center_pointY = 0
 
-        # Converta os keypoints para o formato correto (pontos 2D homogêneos)
-        keypoints_homogeneous = np.array([keypoint.pt + (1,) for keypoint in keypoints], dtype=np.float32)
+    def camera_callback(self, msg):
+        height, width, _ = msg.shape
+        self.point_cloud = []
 
-        # Matriz de projeção da câmera (substitua pela sua matriz real)
-        projection_matrix = np.eye(3, 4)
+        for y in range(height):
+            for x in range(width):
+                pixel_color = msg[y, x]
+                point_2d = [x, y, pixel_color[0], pixel_color[1], pixel_color[2]]  # X, Y, R, G, B
+                self.point_cloud.append(point_2d)
 
-        # Triangulação dos pontos
-        # Triangulação dos pontos
-        points_4d_homogeneous = cv2.triangulatePoints(
-                np.eye(3),  # Matriz de projeção da primeira câmera
-                projection_matrix,  # Matriz de projeção da segunda câmera
-                keypoints_homogeneous.T[:, :2],  # Use apenas as duas primeiras coordenadas dos pontos de projeção
-                keypoints_homogeneous.T[:, 2:],  # Use apenas as duas últimas coordenadas dos pontos de projeção
-        )
+        self.point_cloud = np.array(self.point_cloud)
 
-        # Converta para coordenadas 3D não homogêneas
-        points_3d = cv2.convertPointsFromHomogeneous(points_4d_homogeneous.T).reshape(-1, 3)
+    def yolo_callback(self, msg):
+        yolo_result = msg.model_results[0]
+        self.center_pointX = (yolo_result.top + yolo_result.left) / 2
+        self.center_pointY = (yolo_result.bottom + yolo_result.right) / 2
 
-        # Crie uma nuvem de pontos PyntCloud
-        self.point_cloud = PyntCloud(points=points_3d)
+        cloud_filtered = self.apply_filters()
 
-        # Visualize a nuvem de pontos com Open3D
-        o3d.visualization.draw_geometries([o3d.geometry.PointCloud(o3d.utility.Vector3dVector(points_3d))])
+        EuclideanDistance, distance_x, distance_y = 0, 0, 0
+        threshold = 30
 
+        for cluster in self.extract_clusters(cloud_filtered):
+            centroid3D = np.mean(cluster, axis=0)[:3]
 
-   def yolo_callback(self, data):
+            pixel_position = self.calculate_pixel_position(centroid3D)
 
-	# get the first object detected by YOLO
-        self.yolo_box = ObjectData()
-        self.yolo_box = data.model_results[0]
+            distance_x = abs(self.center_pointX - pixel_position[0])
+            distance_y = abs(self.center_pointY - pixel_position[1])
+            EuclideanDistance = math.sqrt(distance_x**2 + distance_y**2)
 
+            if EuclideanDistance < threshold:
+                self.publish_segmented_cloud(cluster)
 
-        # extract the 2D points from the YOLO bounding box
-        yolo_points_2d = np.array([(self.yolo_box.top + self.yolo_box.left) / 2, (self.yolo_box.bottom + self.yolo_box.right) / 2])
+    def apply_filters(self):
+        cloud = np.array(pc2.read_points(self.point_cloud, field_names=("x", "y", "z", "rgb"), skip_nans=True))
+        
+        # Perform voxel grid downsampling filtering
+        voxel_size = 0.01
+        cloud_filtered = cloud[::int(1/voxel_size)]
 
+        # Perform passthrough filtering to remove points outside a certain range
+        z_min, z_max = 0.78, 1.1
+        indices = np.where((cloud_filtered[:, 2] >= z_min) & (cloud_filtered[:, 2] <= z_max))
+        cloud_filtered = cloud_filtered[indices]
 
-        # combine the 3D points from the point cloud and the 2D points from YOLO
-        combined_points = np.hstack((self.point_cloud, yolo_points_2d))
+        return cloud_filtered
 
+    def extract_clusters(self, cloud):
+        kmeans = KMeans(n_clusters=3, random_state=0)  # Especifique o número desejado de clusters
+        kmeans.fit(cloud[:, :3])
+        labels = kmeans.labels_
 
-        # K-means clustering
-        num_clusters = 10  # Ajust the number of clusters as needed
-        kmeans = KMeans(n_clusters=num_clusters, random_state=0)
-        labels = kmeans.fit_predict(combined_points)
+        clusters = []
+        for label in np.unique(labels):
+            cluster_indices = np.where(labels == label)
+            cluster = cloud[cluster_indices]
+            clusters.append(cluster)
 
+        return clusters
 
-        # calculate the centroids of the clusters
-        # centroids_3d = np.array([np.mean(self.point_cloud[labels == i], axis=0) for i in range(num_clusters)])
-        centroids_2d = np.array([np.mean(yolo_points_2d[labels == i], axis=0) for i in range(num_clusters)])
+    def calculate_pixel_position(self, centroid3D):
+        camera_matrix = np.array([
+            [547.471175, 0.0, 313.045026],
+            [0.0, 547.590335, 237.016225],
+            [0.0, 0.0, 1.0]
+        ])
 
-        # create a mask for the segmented image
-        mask = np.zeros_like(self.gray_image)
-        mask = cv2.fillPoly(mask, np.int32([centroids_2d]), (255, 255, 255))
+        pixel_position = np.array([
+            int(centroid3D[0] * camera_matrix[0, 0] / centroid3D[2] + camera_matrix[0, 2]),
+            int(centroid3D[1] * camera_matrix[1, 1] / centroid3D[2] + camera_matrix[1, 2])
+        ])
 
-        # apply the mask to the original image
-        self.segmented_image = cv2.bitwise_and(self.gray_image, self.gray_image, mask=mask)
+        return pixel_position
 
-        # Publish the segmented image
-        self.publish_segmented_image(self.segmented_image)
-        # save image for testing purposes
-        cv2.imwrite('segmentation_result.jpg', img)
-
-
-   def publish_segmented_image(self, image):
-        msg = Image()
-        msg.header.stamp = self.get_clock().now().to_msg()
-        msg.header.frame_id = 'base_link'  # Adjust the frame_id accordingly
-        msg.height, msg.width, msg.step = image.shape
-        msg.encoding = 'bgr8'
-        msg.data = image.tobytes()
-        self.image_publisher.publish(msg)
-
+    def publish_segmented_cloud(self, cluster):
+        header = pcl_conversions.make_time()
+        cloud_msg = pcl_conversions.array_to_pointcloud2(cluster, stamp=header, frame_id='camera_frame')
+        self.point_cloud_pub.publish(cloud_msg)
 
 
-
-def main(args=None):
-        rclpy.init(args=args)
-        node = cloud_clustering_node()
-        rclpy.spin(node)
-        node.destroy_node()
-        rclpy.shutdown()
+def main():
+    rclpy.init()
+    node = Segmentation()
+    rclpy.spin(node)
+    rclpy.shutdown()
 
 
-
-
-if __name__ == '__main__':
-        main()
+if __name__ == "__main__":
+    main()

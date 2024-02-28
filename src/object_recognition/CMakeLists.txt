@@ -47,7 +47,6 @@ install(
 
 install(
   PROGRAMS
-  scripts/segmentation.py
   scripts/yolo_node.py
   scripts/yolo_subscriber.py
   scripts/webcam_publisher.py
